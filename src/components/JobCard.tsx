@@ -1,11 +1,4 @@
-interface Job {
-  id: number;
-  title: string;
-  company: string;
-  location: string;
-  salary: string;
-  remote: boolean;
-}
+import type { Job } from "@/types";
 
 interface JobCardProps {
   job: Job;

@@ -1,73 +1,86 @@
-# React + TypeScript + Vite
+# Job Board Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern job listing platform built with React, TypeScript, and Tailwind CSS. Features job search, filtering, and application tracking.
 
-Currently, two official plugins are available:
+## 🚀 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend:** React + TypeScript
+- **Styling:** Tailwind CSS
+- **Build Tool:** Vite
+- **Version Control:** Git
 
-## React Compiler
+## 📋 Planned Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [x] Job listing cards with company info
+- [x] Responsive design
+- [ ] Search functionality
+- [ ] Advanced filtering (remote, salary, location)
+- [ ] Job posting form
+- [ ] User authentication
+- [ ] Application tracking
+- [ ] Backend API (Express + MongoDB)
+- [ ] Real-time notifications
 
-## Expanding the ESLint configuration
+## 🛠️ Setup Instructions
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js 18+ installed
+- npm or yarn
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Clone the repository
+git clone https://github.com/jaspersanchez/job-board.git
+cd job-board
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Open http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Build for Production
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
+npm run preview  # Preview production build
 ```
+
+## 📁 Project Structure
+
+```
+job-board/
+├── src/
+│   ├── components/      # React components
+│   ├── types/          # TypeScript type definitions
+│   ├── hooks/          # Custom React hooks
+│   ├── utils/          # Utility functions
+│   ├── App.tsx         # Main app component
+│   └── main.tsx        # Entry point
+├── public/             # Static assets
+└── README.md
+```
+
+## 🤝 Contributing
+
+This is a personal learning project, but suggestions are welcome! Feel free to open an issue.
+
+## 📝 License
+
+MIT License - feel free to use this project for learning purposes.
+
+## 👨‍💻 Author
+
+**Jasper Sanchez**
+
+- GitHub: [@jaspersanchez](https://github.com/jaspersanchez)
+- Project Link: [https://github.com/jaspersanchez/job-board](https://github.com/jaspersanchez/job-board)
+
+---
+
+**Status:** 🚧 In active development
