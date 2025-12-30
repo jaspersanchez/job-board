@@ -6,7 +6,7 @@ interface JobCardProps {
 
 export const JobCard = ({ job }: JobCardProps) => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow">
+    <div className="flex flex-col bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow">
       {/* Header with title and remote badge */}
       <div className="flex items-start justify-between gap-3 mb-3">
         <h2 className="text-xl font-bold text-gray-900 flex-1">{job.title}</h2>
@@ -33,7 +33,7 @@ export const JobCard = ({ job }: JobCardProps) => {
       </div>
 
       {/* Apply button */}
-      <button className="w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-700 active:bg-blue-800 transition-colors">
+      <button className="mt-auto w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-700 active:bg-blue-800 transition-colors">
         Apply Now
       </button>
     </div>
