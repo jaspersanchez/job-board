@@ -9,6 +9,12 @@ export interface Job {
   salaryMax?: number; // Add this for filtering
 }
 
+export type SuccessState = {
+  visible: boolean;
+  type: 'add' | 'delete' | null;
+};
+
+
 export interface Filters {
   remote: boolean | null;
   minSalary: number;
