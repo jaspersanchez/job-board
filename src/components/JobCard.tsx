@@ -28,7 +28,9 @@ export const JobCard = ({ job }: JobCardProps) => {
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-600">
           <span>💰</span>
-          <span>{job.salary}</span>
+          <span>
+            ₱{job.salaryMin} - {job.salaryMax}
+          </span>
         </div>
       </div>
 

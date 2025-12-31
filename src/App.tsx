@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { JobCard } from "@/components/JobCard";
 import { SearchBar } from "@/components/SearchBar";
-import type { Job } from "@/types";
+import { JobFilters } from "@/components/JobFilters";
+import type { Job, Filters } from "@/types";
 
 const mockJobs: Job[] = [
   {
@@ -9,7 +10,8 @@ const mockJobs: Job[] = [
     title: "React Developer",
     company: "TechCorp Manila",
     location: "Manila, PH",
-    salary: "₱60,000 - ₱90,000",
+    salaryMin: 60000,
+    salaryMax: 90000,
     remote: true,
   },
   {
@@ -17,7 +19,8 @@ const mockJobs: Job[] = [
     title: "Full Stack Developer",
     company: "StartupXYZ",
     location: "BGC, Taguig",
-    salary: "₱70,000 - ₱100,000",
+    salaryMin: 70000,
+    salaryMax: 100000,
     remote: false,
   },
   {
@@ -25,7 +28,8 @@ const mockJobs: Job[] = [
     title: "Frontend Engineer",
     company: "Digital Solutions Inc",
     location: "Makati, PH",
-    salary: "₱55,000 - ₱85,000",
+    salaryMin: 55000,
+    salaryMax: 85000,
     remote: true,
   },
   {
@@ -33,7 +37,8 @@ const mockJobs: Job[] = [
     title: "Node.js Backend Developer",
     company: "TechCorp Manila",
     location: "Quezon City, PH",
-    salary: "₱65,000 - ₱95,000",
+    salaryMin: 65000,
+    salaryMax: 95000,
     remote: false,
   },
   {
@@ -41,22 +46,56 @@ const mockJobs: Job[] = [
     title: "Senior React Developer",
     company: "Innovation Labs",
     location: "Remote",
-    salary: "₱90,000 - ₱130,000",
+    salaryMin: 90000,
+    salaryMax: 130000,
+    remote: true,
+  },
+  {
+    id: 6,
+    title: "Junior Frontend Developer",
+    company: "WebDev PH",
+    location: "Pasig, PH",
+    salaryMin: 35000,
+    salaryMax: 50000,
+    remote: false,
+  },
+  {
+    id: 7,
+    title: "DevOps Engineer",
+    company: "Cloud Systems Inc",
+    location: "Remote",
+    salaryMin: 100000,
+    salaryMax: 150000,
     remote: true,
   },
 ];
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState<Filters>({
+    remote: null,
+    minSalary: 0,
+  });
 
-  // Filter jobs based on search query
+  // Apply all filters
   const filteredJobs = mockJobs.filter((job) => {
+    // Search filter
     const query = searchQuery.toLowerCase();
-    return (
+    const matchesSearch =
       job.title.toLowerCase().includes(query) ||
       job.company.toLowerCase().includes(query) ||
-      job.location.toLowerCase().includes(query)
-    );
+      job.location.toLowerCase().includes(query);
+
+    // Remote filter
+    const matchesRemote =
+      filters.remote === null || job.remote === filters.remote;
+
+    // Salary filter
+    const matchesSalary =
+      filters.minSalary === 0 ||
+      (job.salaryMax !== undefined && job.salaryMax >= filters.minSalary);
+
+    return matchesSearch && matchesRemote && matchesSalary;
   });
 
   return (
@@ -70,12 +109,17 @@ function App() {
 
         <SearchBar onSearch={setSearchQuery} />
 
+        <JobFilters filters={filters} onFilterChange={setFilters} />
+
         {filteredJobs.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">
-              No jobs found matching "{searchQuery}"
+            <div className="text-6xl mb-4">😔</div>
+            <p className="text-gray-700 text-lg font-semibold mb-2">
+              No jobs found
             </p>
-            <p className="text-gray-400 text-sm mt-2">Try different keywords</p>
+            <p className="text-gray-500 text-sm">
+              Try adjusting your search or filters
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -3,6 +3,12 @@ export interface Job {
   title: string;
   company: string;
   location: string;
-  salary: string;
   remote: boolean;
+  salaryMin?: number; // Add this for filtering
+  salaryMax?: number; // Add this for filtering
+}
+
+export interface Filters {
+  remote: boolean | null;
+  minSalary: number;
 }
