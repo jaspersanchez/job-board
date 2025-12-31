@@ -4,6 +4,7 @@ export interface Job {
   company: string;
   location: string;
   remote: boolean;
+  salary: string
   salaryMin?: number; // Add this for filtering
   salaryMax?: number; // Add this for filtering
 }
