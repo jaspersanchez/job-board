@@ -3,7 +3,7 @@ import { JobCard } from '@/components/JobCard';
 import { SearchBar } from '@/components/SearchBar';
 import { JobFilters } from '@/components/JobFilters';
 import { JobForm } from '@/components/JobForm';
-import type { Job, Filters } from '@/types';
+import type { Job, Filters, SuccessState } from '@/types';
 
 const initialJobs: Job[] = [
   {
@@ -86,7 +86,11 @@ function App() {
     minSalary: 0
   });
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [success, setSuccess] = useState<SuccessState>({
+    visible: false,
+    type: null,
+  });
+  const [jobToDelete, setJobToDelete] = useState<Job['id'] | null>(null);
 
   // Apply all filters
   const filteredJobs = jobs.filter(job => {
@@ -119,9 +123,18 @@ function App() {
     setIsFormOpen(false);
 
     // Show success message
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 3000);
+    setSuccess({ ...success, visible: true, type: 'add' });
+    setTimeout(() => setSuccess({ ...success, visible: false, type: null }), 3000);
   };
+
+  const handleDeleteJob = (id: Job['id']) => {
+    setJobs(prevJobs => prevJobs.filter(job => job.id !== id))
+    setJobToDelete(null)
+
+    // Show success message
+    setSuccess({ ...success, visible: true, type: 'delete' });
+    setTimeout(() => setSuccess({ ...success, visible: false, type: null }), 3000);
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
@@ -144,15 +157,27 @@ function App() {
         </p>
 
         {/* Success Message */}
-        {showSuccess && (
-          <div className="mb-6 bg-green-50 border-2 border-green-500 rounded-lg p-4 flex items-center gap-3">
-            <span className="text-2xl">✅</span>
-            <div>
-              <p className="text-green-800 font-semibold">Job posted successfully!</p>
-              <p className="text-green-600 text-sm">Your job listing is now live.</p>
+        {success.visible && (
+
+          success.type === 'add' ? (
+            <div className="mb-6 bg-green-50 border-2 border-green-500 rounded-lg p-4 flex items-center gap-3">
+              <span className="text-2xl">✅</span>
+              <div>
+                <p className="text-green-800 font-semibold">Job posted successfully!</p>
+                <p className="text-green-600 text-sm">Your job listing is now live.</p>
+              </div>
             </div>
-          </div>
-        )}
+          ) :
+            (
+              <div className="mb-6 bg-green-50 border-2 border-green-500 rounded-lg p-4 flex items-center gap-3">
+                <span className="text-2xl">✅</span>
+                <div>
+                  <p className="text-green-800 font-semibold">Job deleted successfully!</p>
+                </div>
+              </div>
+            )
+        )
+        }
 
         <SearchBar onSearch={setSearchQuery} />
 
@@ -171,7 +196,7 @@ function App() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredJobs.map(job => (
-              <JobCard key={job.id} job={job} />
+              <JobCard key={job.id} job={job} setJobToDelete={setJobToDelete} />
             ))}
           </div>
         )}
@@ -184,6 +209,33 @@ function App() {
           onCancel={() => setIsFormOpen(false)}
         />
       )}
+
+      {
+        jobToDelete && (
+          <div className='fixed inset-0 bg-black/30 flex items-center justify-center p-4 z-50'>
+            <div className='flex flex-col items-center justify-between p-4 bg-white rounded-lg shadow-xl max-w-sm w-full h-[20vh] overflow-y-auto'>
+              <svg className="mx-auto mb-4 text-fg-disabled w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+              <h3 className="mb-6x max-w-[25ch] text-center">Are you sure you want to delete this job listing?</h3>
+              <div className='flex gap-3 mt-4'>
+                <button
+                  type="button"
+                  className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors"
+                  onClick={() => setJobToDelete(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-3 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 active:bg-red-700 transition-colors"
+                  onClick={() => handleDeleteJob(jobToDelete)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      }
     </div>
   );
 }

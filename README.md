@@ -13,9 +13,10 @@ A modern job listing platform built with React, TypeScript, and Tailwind CSS. Fe
 
 - [x] Job listing cards with company info
 - [x] Responsive design
-- [ ] Search functionality
-- [ ] Advanced filtering (remote, salary, location)
-- [ ] Job posting form
+- [x] Search functionality
+- [x] Advanced filtering (remote, salary, location)
+- [x] Job posting form
+- [x] Delete existing Job listed
 - [ ] User authentication
 - [ ] Application tracking
 - [ ] Backend API (Express + MongoDB)
