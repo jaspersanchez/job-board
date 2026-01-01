@@ -119,22 +119,22 @@ function App() {
       id: Date.now(), // Simple ID generation
     };
 
-    setJobs([jobWithId, ...jobs]); // Add to beginning of list
+    setJobs(prev => [jobWithId, ...prev]);
     setIsFormOpen(false);
 
     // Show success message
-    setSuccess({ ...success, visible: true, type: 'add' });
-    setTimeout(() => setSuccess({ ...success, visible: false, type: null }), 3000);
+    setSuccess((prev) => ({ ...prev, visible: true, type: 'add' }));
+    setTimeout(() => setSuccess((prev) => ({ ...prev, visible: false, type: null })), 3000);
   };
 
   const handleDeleteJob = (id: Job['id']) => {
-    setJobs(prevJobs => prevJobs.filter(job => job.id !== id))
-    setJobToDelete(null)
+    setJobs(prevJobs => prevJobs.filter(job => job.id !== id));
+    setJobToDelete(null);
 
-    // Show success message
-    setSuccess({ ...success, visible: true, type: 'delete' });
-    setTimeout(() => setSuccess({ ...success, visible: false, type: null }), 3000);
-  }
+    // Use functional update
+    setSuccess(prev => ({ ...prev, visible: true, type: 'delete' }));
+    setTimeout(() => setSuccess(prev => ({ ...prev, visible: false, type: null })), 3000);
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
@@ -214,9 +214,11 @@ function App() {
         jobToDelete && (
           <div className='fixed inset-0 bg-black/30 flex items-center justify-center p-4 z-50'>
             <div className='flex flex-col items-center justify-between p-4 bg-white rounded-lg shadow-xl max-w-sm w-full h-[20vh] overflow-y-auto'>
-              <svg className="mx-auto mb-4 text-fg-disabled w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-              <h3 className="mb-6x max-w-[25ch] text-center">Are you sure you want to delete this job listing?</h3>
-              <div className='flex gap-3 mt-4'>
+              <svg className="mx-auto w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+              <h3 className="max-w-[25ch] text-center">
+                Are you sure you want to delete this job listing?
+              </h3>
+              <div className='flex gap-3'>
                 <button
                   type="button"
                   className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors"
