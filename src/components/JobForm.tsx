@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { Job } from '@/types';
 
 interface JobFormProps {
-  onSubmit: (job: Omit<Job, 'id'>) => void;
+  onSubmit: (job: Omit<Job, '_id'>) => void;  // Changed from 'id' to '_id'
   onCancel: () => void;
 }
 
@@ -31,7 +31,6 @@ export const JobForm = ({ onSubmit, onCancel }: JobFormProps) => {
       setFormData({ ...formData, [name]: value });
     }
 
-    // Clear error for this field when user starts typing
     if (errors[name]) {
       setErrors({ ...errors, [name]: '' });
     }
@@ -40,24 +39,20 @@ export const JobForm = ({ onSubmit, onCancel }: JobFormProps) => {
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
 
-    // Title validation
     if (!formData.title.trim()) {
       newErrors.title = 'Job title is required';
     } else if (formData.title.length < 3) {
       newErrors.title = 'Job title must be at least 3 characters';
     }
 
-    // Company validation
     if (!formData.company.trim()) {
       newErrors.company = 'Company name is required';
     }
 
-    // Location validation
     if (!formData.location.trim()) {
       newErrors.location = 'Location is required';
     }
 
-    // Salary validation
     const salaryMin = Number(formData.salaryMin);
     const salaryMax = Number(formData.salaryMax);
 
@@ -91,7 +86,7 @@ export const JobForm = ({ onSubmit, onCancel }: JobFormProps) => {
     const salaryMin = Number(formData.salaryMin);
     const salaryMax = Number(formData.salaryMax);
 
-    const newJob: Omit<Job, 'id'> = {
+    const newJob: Omit<Job, '_id'> = {  // Changed from 'id' to '_id'
       title: formData.title.trim(),
       company: formData.company.trim(),
       location: formData.location.trim(),
@@ -128,8 +123,8 @@ export const JobForm = ({ onSubmit, onCancel }: JobFormProps) => {
               onChange={handleChange}
               placeholder="e.g. Senior React Developer"
               className={`w-full px-4 py-2 border-2 rounded-lg focus:outline-none transition-colors ${errors.title
-                ? 'border-red-500 focus:border-red-500'
-                : 'border-gray-300 focus:border-blue-500'
+                  ? 'border-red-500 focus:border-red-500'
+                  : 'border-gray-300 focus:border-blue-500'
                 }`}
             />
             {errors.title && (
@@ -150,8 +145,8 @@ export const JobForm = ({ onSubmit, onCancel }: JobFormProps) => {
               onChange={handleChange}
               placeholder="e.g. TechCorp Manila"
               className={`w-full px-4 py-2 border-2 rounded-lg focus:outline-none transition-colors ${errors.company
-                ? 'border-red-500 focus:border-red-500'
-                : 'border-gray-300 focus:border-blue-500'
+                  ? 'border-red-500 focus:border-red-500'
+                  : 'border-gray-300 focus:border-blue-500'
                 }`}
             />
             {errors.company && (
@@ -172,8 +167,8 @@ export const JobForm = ({ onSubmit, onCancel }: JobFormProps) => {
               onChange={handleChange}
               placeholder="e.g. Manila, PH or Remote"
               className={`w-full px-4 py-2 border-2 rounded-lg focus:outline-none transition-colors ${errors.location
-                ? 'border-red-500 focus:border-red-500'
-                : 'border-gray-300 focus:border-blue-500'
+                  ? 'border-red-500 focus:border-red-500'
+                  : 'border-gray-300 focus:border-blue-500'
                 }`}
             />
             {errors.location && (
@@ -195,8 +190,8 @@ export const JobForm = ({ onSubmit, onCancel }: JobFormProps) => {
                 onChange={handleChange}
                 placeholder="50000"
                 className={`w-full px-4 py-2 border-2 rounded-lg focus:outline-none transition-colors ${errors.salaryMin
-                  ? 'border-red-500 focus:border-red-500'
-                  : 'border-gray-300 focus:border-blue-500'
+                    ? 'border-red-500 focus:border-red-500'
+                    : 'border-gray-300 focus:border-blue-500'
                   }`}
               />
               {errors.salaryMin && (
@@ -216,8 +211,8 @@ export const JobForm = ({ onSubmit, onCancel }: JobFormProps) => {
                 onChange={handleChange}
                 placeholder="80000"
                 className={`w-full px-4 py-2 border-2 rounded-lg focus:outline-none transition-colors ${errors.salaryMax
-                  ? 'border-red-500 focus:border-red-500'
-                  : 'border-gray-300 focus:border-blue-500'
+                    ? 'border-red-500 focus:border-red-500'
+                    : 'border-gray-300 focus:border-blue-500'
                   }`}
               />
               {errors.salaryMax && (
