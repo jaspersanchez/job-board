@@ -1,8 +1,8 @@
-import type { Job } from "@/types";
+import type { Job } from '@/types';
 
 interface JobCardProps {
   job: Job;
-  setJobToDelete: React.Dispatch<React.SetStateAction<Job['id'] | null>>
+  setJobToDelete: React.Dispatch<React.SetStateAction<Job['_id'] | null>>;  // Changed id to _id
 }
 
 export const JobCard = ({ job, setJobToDelete }: JobCardProps) => {
@@ -21,7 +21,7 @@ export const JobCard = ({ job, setJobToDelete }: JobCardProps) => {
       {/* Company */}
       <p className="text-gray-600 font-medium mb-4">{job.company}</p>
 
-      {/* Location and Salary - stacked on mobile, side by side on larger screens */}
+      {/* Location and Salary */}
       <div className="space-y-2 mb-6">
         <div className="flex items-center gap-2 text-sm text-gray-600">
           <span>📍</span>
@@ -38,7 +38,10 @@ export const JobCard = ({ job, setJobToDelete }: JobCardProps) => {
         <button className="basis-[80%] bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-700 active:bg-blue-800 transition-colors">
           Apply Now
         </button>
-        <button onClick={() => setJobToDelete(job.id)} className="flex justify-center basis-[20%] bg-red-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-red-700 active:bg-red-800 transition-colors">
+        <button
+          onClick={() => setJobToDelete(job._id)}  // Changed id to _id
+          className="flex justify-center basis-[20%] bg-red-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-red-700 active:bg-red-800 transition-colors"
+        >
           <svg
             className="w-6 h-6 text-white"
             aria-hidden="true"
