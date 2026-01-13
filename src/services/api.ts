@@ -1,6 +1,7 @@
 import type { Job } from '@/types';
 
-const API_URL = 'http://localhost:4000/api';
+// Use environment variable or fallback to localhost
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
 
 // GET all jobs
 export const fetchJobs = async (): Promise<Job[]> => {
